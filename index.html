@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CerebroX — AI-Powered Business Intelligence & Chatbots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1e293b;background:#fff;line-height:1.6;overflow-x:hidden}
+:root{
+  --navy:#07111f;--navy2:#0e1d30;--navy3:#162540;
+  --blue:#1d4ed8;--blue2:#3b82f6;
+  --cyan:#06b6d4;--cyan2:#22d3ee;
+  --gold:#f59e0b;--gold2:#fbbf24;
+  --teal:#0d9488;--em:#059669;
+  --txt:#1e293b;--muted:#64748b;--light:#94a3b8;
+  --bg:#fff;--bgalt:#f8fafc;--border:#e2e8f0;
+  --sh:0 4px 24px rgba(0,0,0,.07);--shh:0 12px 40px rgba(0,0,0,.14);--shg:0 0 0 1px rgba(6,182,212,.2),0 8px 32px rgba(6,182,212,.12);
+  --r:16px;--rs:10px;--rl:24px
+}
+h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:900;line-height:1.08;letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-.015em}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:.95rem;font-weight:600}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1140px;margin:0 auto;padding:0 28px}
+.section{padding:96px 0}
+.section-alt{background:var(--bgalt)}
+
+/* Utility */
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.22);padding:4px 13px;border-radius:99px}
+.tag-gold{color:var(--gold);background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.25)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:10px;font-size:.9rem;font-weight:600;transition:all .22s;text-decoration:none;cursor:pointer;border:none}
+.btn-p{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#fff;box-shadow:0 4px 18px rgba(6,182,212,.35)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(6,182,212,.45);text-decoration:none;color:#fff}
+.btn-s{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.88)}
+.btn-s:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4);text-decoration:none;color:#fff}
+.btn-o{background:transparent;border:1.5px solid var(--cyan);color:var(--cyan)}
+.btn-o:hover{background:var(--cyan);color:var(--navy);text-decoration:none}
+.sh{text-align:center;margin-bottom:60px}
+.sh .tag{margin-bottom:14px}
+.sh h2{color:var(--navy);margin-bottom:12px}
+.sh p{color:var(--muted);font-size:1rem;max-width:560px;margin:0 auto;line-height:1.75}
+.divider{width:56px;height:3px;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px;margin:14px auto 0}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:rgba(7,17,31,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--cyan),var(--blue));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0}
+.nav-logo-text{font-weight:800;font-size:1.05rem;color:#fff;letter-spacing:-.01em}
+.nav-logo-text span{color:var(--cyan)}
+.nav-links{display:flex;gap:2px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.6);font-size:.8rem;font-weight:500;padding:6px 11px;border-radius:6px;transition:all .2s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.08);text-decoration:none}
+.nav-cta{display:flex;align-items:center;gap:10px}
+
+/* HERO */
+#hero{background:linear-gradient(140deg,var(--navy) 0%,var(--navy2) 50%,#091828 100%);color:#fff;padding:112px 0 88px;position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center}
+.hero-bg-glow{position:absolute;pointer-events:none}
+.hero-bg-glow.g1{top:-20%;right:-10%;width:700px;height:700px;background:radial-gradient(circle,rgba(6,182,212,.1) 0%,transparent 65%)}
+.hero-bg-glow.g2{bottom:-30%;left:-12%;width:500px;height:500px;background:radial-gradient(circle,rgba(29,78,216,.14) 0%,transparent 65%)}
+.hero-bg-glow.g3{top:30%;left:40%;width:300px;height:300px;background:radial-gradient(circle,rgba(245,158,11,.06) 0%,transparent 65%)}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.hero-dot{width:8px;height:8px;background:var(--cyan);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.hero-eyebrow span{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.06em;text-transform:uppercase}
+.hero-title{color:#fff;margin-bottom:12px}
+.hero-title .accent{background:linear-gradient(90deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.65);max-width:540px;margin-bottom:38px;line-height:1.78}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:52px}
+.hero-proof{display:flex;gap:40px;flex-wrap:wrap}
+.hp-num{font-size:2rem;font-weight:900;color:var(--cyan);line-height:1}
+.hp-lbl{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:4px;font-weight:500}
+/* Chat preview card */
+.chat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:28px;backdrop-filter:blur(8px);position:relative}
+.chat-card-top{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:20px}
+.chat-avatar{width:36px;height:36px;background:linear-gradient(135deg,var(--cyan),var(--blue));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.chat-name{font-size:.88rem;font-weight:600;color:#fff}
+.chat-status{font-size:.72rem;color:var(--em);display:flex;align-items:center;gap:4px}
+.chat-status::before{content:'';width:6px;height:6px;background:var(--em);border-radius:50%;display:inline-block}
+.chat-msgs{display:flex;flex-direction:column;gap:12px}
+.msg{max-width:88%;font-size:.82rem;line-height:1.55;padding:10px 14px;border-radius:12px}
+.msg-bot{background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.2);color:rgba(255,255,255,.85);align-self:flex-start;border-radius:4px 12px 12px 12px}
+.msg-user{background:rgba(29,78,216,.25);border:1px solid rgba(29,78,216,.35);color:rgba(255,255,255,.85);align-self:flex-end;border-radius:12px 4px 12px 12px}
+.chat-typing{display:flex;align-items:center;gap:4px;padding:10px 14px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.15);border-radius:4px 12px 12px 12px;align-self:flex-start;width:fit-content}
+.chat-typing span{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:typing .9s ease-in-out infinite}
+.chat-typing span:nth-child(2){animation-delay:.15s}
+.chat-typing span:nth-child(3){animation-delay:.3s}
+@keyframes typing{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-4px)}}
+.chat-input{display:flex;align-items:center;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
+.chat-input-box{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px 12px;font-size:.78rem;color:rgba(255,255,255,.5);font-family:inherit}
+.chat-send{width:32px;height:32px;background:var(--cyan);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.chat-channels{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
+.ch-badge{font-size:.67rem;font-weight:600;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.55)}
+
+/* SERVICES */
+.svc-featured{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);border-radius:var(--rl);padding:52px;margin-bottom:32px;color:#fff;position:relative;overflow:hidden;border:1px solid rgba(6,182,212,.18)}
+.svc-featured::before{content:'';position:absolute;top:-30%;right:-8%;width:400px;height:400px;background:radial-gradient(circle,rgba(6,182,212,.15) 0%,transparent 70%);pointer-events:none}
+.svc-feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;position:relative;z-index:1}
+.svc-feat-icon{width:64px;height:64px;background:linear-gradient(135deg,rgba(6,182,212,.25),rgba(29,78,216,.25));border:1px solid rgba(6,182,212,.35);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:18px}
+.svc-featured h3{font-size:1.65rem;color:#fff;margin-bottom:12px;font-weight:800}
+.svc-featured p{color:rgba(255,255,255,.68);line-height:1.75;margin-bottom:20px;font-size:.97rem}
+.feat-list{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.feat-list li{display:flex;align-items:flex-start;gap:9px;font-size:.87rem;color:rgba(255,255,255,.75);list-style:none}
+.feat-list li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px}
+.feat-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.feat-pill{font-size:.7rem;font-weight:600;background:rgba(6,182,212,.14);border:1px solid rgba(6,182,212,.3);color:var(--cyan2);padding:3px 10px;border-radius:5px}
+/* Channels illustration */
+.channels-visual{display:flex;flex-direction:column;gap:12px}
+.cv-item{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 18px;transition:all .2s}
+.cv-item:hover{background:rgba(6,182,212,.08);border-color:rgba(6,182,212,.25)}
+.cv-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.cv-text strong{display:block;font-size:.87rem;color:#fff;font-weight:600;margin-bottom:2px}
+.cv-text span{font-size:.76rem;color:rgba(255,255,255,.5)}
+
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
+.svc{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:28px;box-shadow:var(--sh);transition:all .22s;position:relative;overflow:hidden}
+.svc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--blue));opacity:0;transition:opacity .22s}
+.svc:hover{box-shadow:var(--shh);transform:translateY(-4px);border-color:rgba(6,182,212,.25)}
+.svc:hover::after{opacity:1}
+.svc-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px}
+.si-c{background:rgba(6,182,212,.1);color:var(--cyan)}
+.si-b{background:rgba(29,78,216,.1);color:var(--blue2)}
+.si-g{background:rgba(245,158,11,.1);color:var(--gold)}
+.si-e{background:rgba(5,150,105,.1);color:var(--em)}
+.svc h3{color:var(--navy);margin-bottom:8px;font-size:1rem}
+.svc p{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:14px}
+.svc-tags{display:flex;flex-wrap:wrap;gap:5px}
+.sv-tag{font-size:.68rem;font-weight:500;background:var(--bgalt);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:5px}
+
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.why{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--sh);text-align:center;transition:all .22s}
+.why:hover{box-shadow:var(--shg);border-color:var(--cyan);transform:translateY(-3px)}
+.why-icon{font-size:2rem;margin-bottom:12px}
+.why h4{color:var(--navy);margin-bottom:7px}
+.why p{font-size:.83rem;color:var(--muted);line-height:1.6}
+
+/* PROCESS */
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.process-steps::before{content:'';position:absolute;top:36px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,var(--cyan),var(--blue));z-index:0}
+.ps{text-align:center;padding:0 12px;position:relative;z-index:1}
+.ps-num{width:72px;height:72px;background:#fff;border:2px solid var(--cyan);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 18px;box-shadow:0 0 0 6px #fff,var(--sh)}
+.ps h4{color:var(--navy);margin-bottom:6px;font-size:.9rem}
+.ps p{font-size:.79rem;color:var(--muted);line-height:1.6}
+
+/* INDUSTRIES */
+.ind-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.ind{background:#fff;border:1px solid var(--border);border-radius:var(--rs);padding:18px;text-align:center;box-shadow:var(--sh);transition:all .2s}
+.ind:hover{box-shadow:var(--shh);border-color:var(--cyan);transform:translateY(-3px)}
+.ind-icon{font-size:1.8rem;margin-bottom:8px}
+.ind span{font-size:.8rem;font-weight:600;color:var(--navy)}
+
+/* STATS BAND */
+.stats-band{background:linear-gradient(135deg,var(--navy),var(--navy3));padding:64px 0;color:#fff}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+.stat-n{font-size:2.6rem;font-weight:900;color:var(--cyan);line-height:1;margin-bottom:6px}
+.stat-l{font-size:.8rem;color:rgba(255,255,255,.55);font-weight:500}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 60%,#061520 100%);padding:96px 0;color:#fff;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(6,182,212,.1) 0%,transparent 60%);pointer-events:none}
+.cta-section h2{color:#fff;margin-bottom:14px}
+.cta-section p{color:rgba(255,255,255,.65);font-size:1rem;max-width:500px;margin:0 auto 36px;line-height:1.75}
+.cta-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+
+/* FOOTER */
+footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.55);padding:56px 0 32px}
+.footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand .nav-logo{margin-bottom:14px;display:inline-flex}
+.footer-brand p{font-size:.83rem;line-height:1.7;color:rgba(255,255,255,.45);max-width:260px}
+.footer-col h5{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-col ul li a{color:rgba(255,255,255,.55);font-size:.83rem;transition:color .2s}
+.footer-col ul li a:hover{color:var(--cyan);text-decoration:none}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:.75rem;color:rgba(255,255,255,.3)}
+.footer-socials{display:flex;gap:8px}
+.fsoc{width:32px;height:32px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:rgba(255,255,255,.5);transition:all .2s;text-decoration:none}
+.fsoc:hover{background:rgba(6,182,212,.15);border-color:rgba(6,182,212,.35);color:var(--cyan);text-decoration:none}
+
+/* Fade-in */
+.fi{opacity:0;transform:translateY(22px);transition:opacity .55s,transform .55s}
+.fi.vis{opacity:1;transform:translateY(0)}
+
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .svc-feat-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:repeat(2,1fr);gap:28px}
+  .process-steps::before{display:none}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .hero-proof{gap:24px}
+  .process-steps{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .svc-featured{padding:28px}
+  .section{padding:64px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">X</div>
+      <div class="nav-logo-text">Cerebro<span>X</span>.cloud</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#industries">Industries</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-p" style="padding:9px 20px;font-size:.82rem;">Get Started →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-glow g1"></div>
+  <div class="hero-bg-glow g2"></div>
+  <div class="hero-bg-glow g3"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">
+          <div class="hero-dot"></div>
+          <span>AI-Powered Business Solutions</span>
+        </div>
+        <h1 class="hero-title">
+          Turn Data Into<br>
+          <span class="accent">Decisions.</span><br>
+          Automate With AI.
+        </h1>
+        <p class="hero-sub">
+          CerebroX delivers intelligent chatbots, data analytics, machine learning, and automation — giving your business the competitive edge to grow faster and work smarter.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-p">Book a Free Demo →</a>
+          <a href="#services" class="btn btn-s">Explore Services</a>
+        </div>
+        <div class="hero-proof">
+          <div><div class="hp-num">15+</div><div class="hp-lbl">Years AI/ML Expertise</div></div>
+          <div><div class="hp-num">10+</div><div class="hp-lbl">Channels Supported</div></div>
+          <div><div class="hp-num">50+</div><div class="hp-lbl">Models Deployed</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="chat-card">
+          <div class="chat-card-top">
+            <div class="chat-avatar">🤖</div>
+            <div>
+              <div class="chat-name">CerebroX AI Assistant</div>
+              <div class="chat-status">Online — Ready to help</div>
+            </div>
+          </div>
+          <div class="chat-msgs">
+            <div class="msg msg-user">Hi! What are your pricing plans?</div>
+            <div class="msg msg-bot">Hello! 👋 Great question. Our plans start at €499/mo for the Starter chatbot. For enterprise analytics + automation, I'd love to connect you with our team. Want me to schedule a quick call?</div>
+            <div class="msg msg-user">Yes, tomorrow at 10am works.</div>
+            <div class="msg msg-bot">Done! ✅ I've booked a 30-minute call for tomorrow at 10:00 AM. You'll receive a calendar invite at your email shortly. Anything else I can help with?</div>
+            <div class="chat-typing"><span></span><span></span><span></span></div>
+          </div>
+          <div class="chat-input">
+            <div class="chat-input-box">Type your message…</div>
+            <div class="chat-send">→</div>
+          </div>
+          <div class="chat-channels">
+            <span class="ch-badge">💬 WhatsApp</span>
+            <span class="ch-badge">✈️ Telegram</span>
+            <span class="ch-badge">🌐 Web</span>
+            <span class="ch-badge">📧 Email</span>
+            <span class="ch-badge">📲 SMS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section section-alt">
+  <div class="container">
+    <div class="sh fi">
+      <span class="tag">Services</span>
+      <h2>What We Build For You</h2>
+      <div class="divider"></div>
+      <p>End-to-end AI solutions from strategy to deployment — no data science degree required on your end.</p>
+    </div>
+
+    <!-- Featured: Chatbots -->
+    <div class="svc-featured fi">
+      <div class="svc-feat-grid">
+        <div>
+          <span class="tag tag-gold" style="margin-bottom:16px;">⭐ Flagship Service</span>
+          <div class="svc-feat-icon">🤖</div>
+          <h3>Intelligent AI Chatbots</h3>
+          <p>Deploy AI-powered chatbots that handle customer support, lead qualification, appointment booking, and sales — 24/7, across every channel your customers already use.</p>
+          <ul class="feat-list">
+            <li>Multi-channel deployment: WhatsApp, Telegram, Web, Email, SMS</li>
+            <li>RAG-powered knowledge base — answers from your own documents</li>
+            <li>Tool calling: book meetings, query CRMs, look up orders in real time</li>
+            <li>Multilingual support — serve global customers effortlessly</li>
+            <li>Human handoff escalation with full conversation context</li>
+            <li>Analytics dashboard — conversations, CSAT, resolution rate</li>
+          </ul>
+          <div class="feat-pills">
+            <span class="feat-pill">LangChain</span><span class="feat-pill">LangGraph</span><span class="feat-pill">RAG / FAISS</span>
+            <span class="feat-pill">OpenAI</span><span class="feat-pill">Claude</span><span class="feat-pill">Gemini</span>
+            <span class="feat-pill">FastAPI</span><span class="feat-pill">Docker</span><span class="feat-pill">make.com</span>
+          </div>
+          <div style="margin-top:24px;">
+            <a href="#contact" class="btn btn-p">Deploy Your Chatbot →</a>
+          </div>
+        </div>
+        <div>
+          <div class="channels-visual">
+            <div class="cv-item">
+              <div class="cv-icon" style="background:rgba(37,211,102,.18);">💬</div>
+              <div class="cv-text">
+                <strong>WhatsApp Business</strong>
+                <span>Reach customers where they already message</span>
+              </div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-icon" style="background:rgba(41,182,246,.18);">✈️</div>
+              <div class="cv-text">
+                <strong>Telegram Bot</strong>
+                <span>Instant, secure, no phone number required</span>
+              </div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-icon" style="background:rgba(99,102,241,.18);">🌐</div>
+              <div class="cv-text">
+                <strong>Web Chat Widget</strong>
+                <span>Embed on any website in minutes</span>
+              </div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-icon" style="background:rgba(245,158,11,.18);">🗣️</div>
+              <div class="cv-text">
+                <strong>Voice & Phone</strong>
+                <span>AI voice agents for inbound calls</span>
+              </div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-icon" style="background:rgba(6,182,212,.18);">📧</div>
+              <div class="cv-text">
+                <strong>Email & CRM Integration</strong>
+                <span>Sync with HubSpot, Salesforce, and more</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other services grid -->
+    <div class="svc-grid">
+
+      <div class="svc fi">
+        <div class="svc-icon si-b">📊</div>
+        <h3>Data Analytics & BI</h3>
+        <p>Transform raw data into actionable dashboards. From KPI tracking to anomaly detection, we turn your data warehouse into a strategic asset.</p>
+        <div class="svc-tags">
+          <span class="sv-tag">Power BI</span><span class="sv-tag">Python</span><span class="sv-tag">SQL</span>
+          <span class="sv-tag">MLflow</span><span class="sv-tag">Pandas</span>
+        </div>
+      </div>
+
+      <div class="svc fi">
+        <div class="svc-icon si-c">🧠</div>
+        <h3>Machine Learning & AI</h3>
+        <p>Custom ML models for prediction, classification, forecasting, and recommendation — deployed as APIs your systems can consume instantly.</p>
+        <div class="svc-tags">
+          <span class="sv-tag">PyTorch</span><span class="sv-tag">Scikit-learn</span><span class="sv-tag">AutoML</span>
+          <span class="sv-tag">XGBoost</span><span class="sv-tag">FastAPI</span>
+        </div>
+      </div>
+
+      <div class="svc fi">
+        <div class="svc-icon si-g">⚡</div>
+        <h3>Process Automation</h3>
+        <p>Eliminate repetitive tasks. We automate workflows across your tools — CRMs, ERPs, spreadsheets, email, and custom systems — saving hours every day.</p>
+        <div class="svc-tags">
+          <span class="sv-tag">make.com</span><span class="sv-tag">LangGraph</span><span class="sv-tag">Docker</span>
+          <span class="sv-tag">GCP</span><span class="sv-tag">APIs</span>
+        </div>
+      </div>
+
+      <div class="svc fi">
+        <div class="svc-icon si-e">🔍</div>
+        <h3>Computer Vision</h3>
+        <p>Automated inspection, document processing, image classification, and real-time object detection for manufacturing, healthcare, and logistics.</p>
+        <div class="svc-tags">
+          <span class="sv-tag">CNNs</span><span class="sv-tag">OpenCV</span><span class="sv-tag">Grad-CAM</span>
+          <span class="sv-tag">SHAP</span><span class="sv-tag">Vertex AI</span>
+        </div>
+      </div>
+
+      <div class="svc fi">
+        <div class="svc-icon si-b">📝</div>
+        <h3>NLP & Document AI</h3>
+        <p>Extract insights from unstructured text — contracts, reports, emails, customer feedback — with summarization, classification, and entity extraction.</p>
+        <div class="svc-tags">
+          <span class="sv-tag">RAG</span><span class="sv-tag">Embeddings</span><span class="sv-tag">FAISS</span>
+          <span class="sv-tag">Transformers</span><span class="sv-tag">NLP</span>
+        </div>
+      </div>
+
+      <div class="svc fi">
+        <div class="svc-icon si-g">☁️</div>
+        <h3>Cloud & MLOps</h3>
+        <p>End-to-end deployment on GCP, containerized with Docker, monitored with MLflow — production-grade infrastructure that scales with your business.</p>
+        <div class="svc-tags">
+          <span class="sv-tag">GCP</span><span class="sv-tag">Cloud Run</span><span class="sv-tag">Docker</span>
+          <span class="sv-tag">MLflow</span><span class="sv-tag">HPC</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="fi"><div class="stat-n">15+</div><div class="stat-l">Years of AI/ML Experience</div></div>
+      <div class="fi"><div class="stat-n">13+</div><div class="stat-l">AI/ML Projects Delivered</div></div>
+      <div class="fi"><div class="stat-n">10</div><div class="stat-l">Countries Served</div></div>
+      <div class="fi"><div class="stat-n">24/7</div><div class="stat-l">Bot Uptime Guarantee</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section id="why" class="section">
+  <div class="container">
+    <div class="sh fi">
+      <span class="tag">Why CerebroX</span>
+      <h2>Built by Researchers. Made for Business.</h2>
+      <div class="divider"></div>
+      <p>We bridge the gap between cutting-edge AI research and practical business outcomes that show up on your bottom line.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why fi">
+        <div class="why-icon">🎓</div>
+        <h4>PhD-Level AI Expertise</h4>
+        <p>Our team holds Marie Curie fellowships and published in peer-reviewed journals. You get research-grade AI — packaged for business.</p>
+      </div>
+      <div class="why fi">
+        <div class="why-icon">🚀</div>
+        <h4>Fast Time to Value</h4>
+        <p>From kickoff to a live chatbot in days, not months. We use proven frameworks that accelerate deployment without sacrificing quality.</p>
+      </div>
+      <div class="why fi">
+        <div class="why-icon">🔒</div>
+        <h4>Enterprise Security</h4>
+        <p>Data stays private. We support on-premise models (Ollama), private cloud, and GDPR-compliant architectures for sensitive industries.</p>
+      </div>
+      <div class="why fi">
+        <div class="why-icon">🌍</div>
+        <h4>Multilingual & Global</h4>
+        <p>Deployed across 10 countries. Our solutions handle multiple languages natively, so your AI can serve customers worldwide.</p>
+      </div>
+      <div class="why fi">
+        <div class="why-icon">🔗</div>
+        <h4>Seamless Integration</h4>
+        <p>We connect to your existing CRM, ERP, calendar, and databases. No rip-and-replace — we enhance what you already have.</p>
+      </div>
+      <div class="why fi">
+        <div class="why-icon">📈</div>
+        <h4>Measurable ROI</h4>
+        <p>Every engagement comes with KPI tracking. We set targets upfront and report on conversations handled, leads converted, and hours saved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section section-alt">
+  <div class="container">
+    <div class="sh fi">
+      <span class="tag">How It Works</span>
+      <h2>From Idea to Production in 4 Steps</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="process-steps">
+      <div class="ps fi">
+        <div class="ps-num">🔍</div>
+        <h4>1. Discovery Call</h4>
+        <p>We map your business goals, data sources, and bottlenecks in a free 30-minute session.</p>
+      </div>
+      <div class="ps fi">
+        <div class="ps-num">📐</div>
+        <h4>2. Solution Design</h4>
+        <p>We propose the optimal AI architecture, channel strategy, and success metrics for your use case.</p>
+      </div>
+      <div class="ps fi">
+        <div class="ps-num">⚙️</div>
+        <h4>3. Build & Train</h4>
+        <p>We develop, train, and test your solution — connecting to your data and integrating with your tools.</p>
+      </div>
+      <div class="ps fi">
+        <div class="ps-num">🚀</div>
+        <h4>4. Launch & Optimize</h4>
+        <p>We deploy to production, monitor performance, and iterate continuously to maximize impact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries" class="section">
+  <div class="container">
+    <div class="sh fi">
+      <span class="tag">Industries</span>
+      <h2>Sector Expertise</h2>
+      <div class="divider"></div>
+      <p>We've delivered AI solutions across a wide range of industries with domain-specific nuance.</p>
+    </div>
+    <div class="ind-grid">
+      <div class="ind fi"><div class="ind-icon">🏥</div><span>Healthcare</span></div>
+      <div class="ind fi"><div class="ind-icon">🏦</div><span>Finance</span></div>
+      <div class="ind fi"><div class="ind-icon">🛍️</div><span>E-Commerce</span></div>
+      <div class="ind fi"><div class="ind-icon">⚙️</div><span>Manufacturing</span></div>
+      <div class="ind fi"><div class="ind-icon">🌱</div><span>AgTech</span></div>
+      <div class="ind fi"><div class="ind-icon">🎓</div><span>Education</span></div>
+      <div class="ind fi"><div class="ind-icon">🏨</div><span>Hospitality</span></div>
+      <div class="ind fi"><div class="ind-icon">⚖️</div><span>Legal</span></div>
+      <div class="ind fi"><div class="ind-icon">📦</div><span>Logistics</span></div>
+      <div class="ind fi"><div class="ind-icon">🔬</div><span>Life Sciences</span></div>
+      <div class="ind fi"><div class="ind-icon">🏗️</div><span>Real Estate</span></div>
+      <div class="ind fi"><div class="ind-icon">📡</div><span>Telecom</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="fi">
+      <span class="tag" style="margin-bottom:18px;color:var(--gold);background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.28);">Get Started Today</span>
+      <h2>Ready to Deploy Your AI Assistant?</h2>
+      <p>Book a free 30-minute demo and see how CerebroX can automate your customer interactions, unlock your data, and accelerate your growth.</p>
+      <div class="cta-actions">
+        <a href="mailto:contact@cerebrox.cloud" class="btn btn-p" style="font-size:.95rem;padding:15px 30px;">✉ contact@cerebrox.cloud</a>
+        <a href="https://www.cerebrox.cloud" class="btn btn-s" style="font-size:.95rem;padding:15px 30px;">🌐 www.cerebrox.cloud</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-mark">X</div>
+          <div class="nav-logo-text">Cerebro<span>X</span>.cloud</div>
+        </a>
+        <p>AI-powered chatbots, analytics, machine learning, and automation — designed to grow your business.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">AI Chatbots</a></li>
+          <li><a href="#services">Data Analytics</a></li>
+          <li><a href="#services">Machine Learning</a></li>
+          <li><a href="#services">Automation</a></li>
+          <li><a href="#services">Computer Vision</a></li>
+          <li><a href="#services">NLP & Document AI</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#why">Why CerebroX</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:contact@cerebrox.cloud">contact@cerebrox.cloud</a></li>
+          <li><a href="https://www.cerebrox.cloud">www.cerebrox.cloud</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 CerebroX.cloud — All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="https://linkedin.com/in/bsaldivar" class="fsoc" target="_blank">in</a>
+        <a href="https://github.com/bsaldivaremc2" class="fsoc" target="_blank">⌥</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+const secs = document.querySelectorAll('section[id]');
+const nls = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  nls.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
